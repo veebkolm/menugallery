@@ -1,0 +1,25 @@
+ul#remove-images { 
+	padding: .5vw;
+	font-size: 0;
+	display: -ms-flexbox;
+	-ms-flex-wrap: wrap;
+	-ms-flex-direction: column;
+	-webkit-flex-flow: row wrap; 
+	flex-flow: row wrap; 
+	display: -webkit-box;
+	display: flex;
+}
+ul#remove-images > li.images {
+	-webkit-box-flex: auto;
+	-ms-flex: auto;
+	flex: auto; 
+	max-width: 30%; 
+	margin: .5vw; 
+}
+ul#remove-images > li.images div.thumb-container {
+	max-height: 200px;
+	overflow: hidden;
+}
+ul#remove-images > li.images div.thumb-container img {
+	width: 100%; 
+}
