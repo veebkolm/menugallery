@@ -1,0 +1,318 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) exit;  // exit if accessed directly
+/**
+Plugin Name: Simple Gallery
+Description: A simple gallery plugin for Wordpress
+Version: 0.0.1
+Author: Galilei
+License: MIT
+Text Domain: SG_TXTDM
+Domain Path: /languages
+**/
+
+if ( ! class_exists( 'Simple_Gallery' )) {
+
+	class Simple_Gallery {
+		
+		public function __construct() {
+			$this->__constants();
+			$this->__hooks();
+		}
+
+		protected function __constants() {
+			// plugin version
+			define( 'SG_PLUGIN_VER', '0.0.1' );
+
+			// plugin text domain
+			define( 'SG_TXTDM', 'simple-gallery' );
+
+			// plugin name
+			define( 'SG_NAME', __( 'Simple Gallery', SG_TXTDM ) );
+
+			// plugin slug
+			define( 'SG_SLUG', 'sg_gallery');
+
+			// plugin directory path
+			define( 'SG_PATH', plugin_dir_path( __FILE__ ) );
+
+			// plugin directory URL
+			define( 'SG_URL', plugin_dir_url( __FILE__ ) );
+
+			define( 'SG_SECURE_KEY', md5( NONCE_KEY ) );
+		}  // end of constants function
+
+		protected function __hooks() {
+			// add gallery menu items
+			// add_action( 'admin_menu', array($this, 'sg_menu'), 101 );
+
+			// load text domain
+			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+
+			// create "Simple Gallery" custom post
+			add_action( 'init', array( $this, 'simple_gallery' ) );
+
+			// add meta box to custom box
+			add_action( 'add_meta_boxes', array( $this, 'admin_add_meta_box' ) );
+			
+			// loaded during admin init
+			add_action( 'admin_init', array( $this, 'admin_add_meta_box' ) );
+
+			add_action( 'wp_ajax_sg_js', array( &$this, '_ajax_sg' ) );
+
+			add_action( 'save_post', array( &$this, '_sg_save_settings' ) );
+
+		}  // end of hooks function
+
+		// public function sg_menu() { }
+
+		public function load_textdomain() {
+			load_plugin_textdomain( 
+				SG_TXTDM, 
+				false, 
+				dirname( plugin_basename( __FILE__ ) ) . '/languages'
+			);
+		}
+
+		public function simple_gallery() {
+			$labels = array(
+				'name'                => _x( 'Simple Gallery', 'Post Type General Name', SG_TXTDM ),
+				'singular_name'       => _x( 'Simple Gallery', 'Post Type Singular Name', SG_TXTDM ),
+				'menu_name'           => __( 'Simple Gallery', SG_TXTDM ),
+				'parent_item_colon'   => __( 'Parent Item:', SG_TXTDM ),
+				'all_items'           => __( 'All Gallery', SG_TXTDM ),
+				'add_new_item'        => __( 'Add New Gallery', SG_TXTDM ),
+				'add_new'             => __( 'Add New Gallery', SG_TXTDM ),
+				'new_item'            => __( 'New Simple Gallery', SG_TXTDM ),
+				'edit_item'           => __( 'Edit Simple Gallery', SG_TXTDM ),
+				'update_item'         => __( 'Update Simple Gallery', SG_TXTDM ),
+				'search_items'        => __( 'Search Simple Gallery', SG_TXTDM ),
+				'not_found'           => __( 'Simple Gallery Not found', SG_TXTDM ),
+				'not_found_in_trash'  => __( 'Simple Gallery Not found in Trash', SG_TXTDM ),
+			);
+			$args = array(
+				'label'               => __( 'Simple Gallery', SG_TXTDM ),
+				'description'         => __( 'Custom Post Type For Simple Gallery', SG_TXTDM ),
+				'labels'              => $labels,
+				'supports'            => array('title'),
+				'taxonomies'          => array(),
+				'hierarchical'        => false,
+				'public'              => true,
+				'show_ui'             => true,
+				'show_in_menu'        => true,
+				'menu_position'       => 65,
+				'menu_icon'           => 'dashicons-screenoptions',
+				'show_in_admin_bar'   => true,
+				'show_in_nav_menus'   => true,
+				'can_export'          => true,
+				'has_archive'         => true,		
+				'exclude_from_search' => false,
+				'publicly_queryable'  => true,
+				'capability_type'     => 'page',
+			);
+			register_post_type( 'simple_gallery', $args );
+		} // end of post type function
+
+		public function admin_add_meta_box() {
+			add_meta_box( '2', __('Add Simple Gallery', SG_TXTDM), array(&$this, 'sg_image_upload'), 'simple_gallery', 'normal', 'default' );
+			add_meta_box( '1', __('Categories', SG_TXTDM), array(&$this, 'sg_categories'), 'simple_gallery', 'normal', 'high' );
+		}
+
+		public function sg_categories($post) {
+			$all_category = get_option('simple_gallery_categories' . $post->ID);
+			if(is_array($all_category)){
+				if(!isset($all_category[0])) {
+					$all_category[0] = "all";
+					update_option('simple_gallery_categories' . $post->ID, $all_category);
+				}
+			} else {
+				$all_category[0] = 'all';
+				update_option('simple_gallery_categories' . $post->ID, $all_category);
+			}
+			?>
+			<div id="categories">
+				<div class="input_fields_wrap">
+				    <button class="add_field_button" style="margin-bottom: 10px;">Add category</button>
+				    <?php
+					for( $i = 0; $i < count($all_category); $i++ ) {
+						?>
+						<div><input value="<?php echo $all_category[$i]; ?>" type="text" name="categories[]"/><span class="dashicons dashicons-dismiss remove_field" style="margin-top:3px; margin-left: 5px;"></span></div>
+						<?php
+					}
+						?>
+				</div>
+			</div>
+			<script type="text/javascript">
+				jQuery(document).ready(function() {
+				    var wrapper         = jQuery(".input_fields_wrap"); // Fields wrapper
+				    var add_button      = jQuery(".add_field_button"); // Add button ID
+				   
+				    var x = 1; // initlal text box count
+				    jQuery(add_button).click(function(e){ // on add input button click
+				        e.preventDefault();
+			            x++; // text box increment
+			            jQuery(wrapper).append('<div><input type="text" name="categories[]"/><span class="dashicons dashicons-dismiss remove_field" style="margin-top:3px; margin-left: 5px;"></span></div>'); //add input box
+				    });
+				   
+				    jQuery(wrapper).on("click",".remove_field", function(e){ // user click on remove text
+				    	if (confirm('Are sure to delete this images?')) {
+				    		e.preventDefault(); jQuery(this).parent('div').fadeOut(700, function() {
+		                        jQuery(this).remove();
+		                    });
+		                    x--;
+		                }
+				        
+				    })
+				});			
+			</script>
+			<?php
+		}
+
+		public function sg_image_upload($post) {
+			wp_enqueue_script( 'jquery' );
+			wp_enqueue_script( 'media-upload' );  // provides all functions for handling media uploads
+			wp_enqueue_script( 'sg-uploader.js' , SG_URL . 'js/sg-uploader.js', array( 'jquery' ) );
+			wp_enqueue_style( 'sg-admin', SG_URL . 'css/sg-admin.css' );
+			wp_enqueue_media();	
+
+			?>
+
+			<div id="image_upload">
+			<ul id="remove-images" class="sbox">
+				<?php
+				// get all simple_gallery posts				
+				$images = unserialize(base64_decode(
+					get_post_meta( $post->ID, 'simple_gallery'.$post->ID, true )
+				));
+		
+				$all_category = get_option( 'simple_gallery_categories' . $post->ID );
+				$filters = $images['filters'];
+
+				// check if there are images already attached
+				if ( isset( $images['image-ids'] ) ) {
+					$count = 0;
+
+					foreach( $images['image-ids'] as $id ) {
+						$thumb 		= wp_get_attachment_image_src( $id, 'medium', true );
+						$attachment = get_post( $id ); 
+						if( ! $images['extra-field'][$id] ) {
+							$images['extra-field'][$id] = '';
+						}
+
+
+						if( isset( $filters[$id] ) ) {
+							$selected_filters_array = $filters[$id];
+						} else {
+							$selected_filters_array = array();
+						}
+
+						?>
+						<li class="images">
+							<div class="thumb-container">
+								<img src="<?php echo $thumb[0]; ?>" alt="">
+							</div>
+							<input type="hidden" id="image-ids[]" name="image-ids[]" value="<?php echo $id; ?>" />
+							<input type="text" name="image-title[]" id="image-title[]" style="width: 100%;" placeholder="Image Title" value="<?php echo get_the_title($id); ?>">
+							<input type="text" name="image-description[]" id="image-description[]" style="width: 100%;" placeholder="Image Description" value="<?php echo $attachment->post_content; ?>">
+							
+							<select name="filters[<?php echo $id; ?>][]" multiple="multiple" id="filters" style="width: 100%;">
+								<?php
+								foreach ($all_category as $key => $value) {																			
+									?><strong><option value="<?php echo $key; ?>" <?php if(count($selected_filters_array)) { if(in_array($key, $selected_filters_array)) echo "selected=selected"; } ?>><?php echo ucwords($value); ?></option></strong><?php
+								}							
+								?>
+							</select>
+							<input type="button" name="remove-image" id="remove-image" style="width: 100%;" class="button" value="Delete">
+						</li>
+						<?php
+					}  // end of foreach
+
+				}  // end of if isset( $images['image-ids'] )
+				?>
+			</ul>
+				<div name="add-new-images" id="add-new-images" class="new-images">
+					<div class="menu-icon dashicons dashicons-format-image"></div>
+					<div class="add-text"><?php _e('Add Image', PFG_TXTDM); ?></div>
+				</div>
+				<p><?php echo "[sg id=".$post->ID."]"; ?></p>
+			</div>
+			<?php
+			require_once('simple-gallery-settings.php');
+
+		}  // end of sg_image_upload
+
+		public function _sg_ajax_callback_function($id) {
+			// thumb, thumbnail, medium, large, post-thumbnail
+			$thumbnail = wp_get_attachment_image_src($id, 'medium', true);
+			$attachment = get_post( $id );  // $id = attachment id
+			$all_category = get_option( 'simple_gallery_categories' . $id );	
+			?>
+			<li class="images">
+				<div class="thumb-container">
+					<img src="<?php echo $thumbnail[0]; ?>" alt="">
+				</div>
+				<input type="hidden" id="image-ids[]" name="image-ids[]" value="<?php echo $id; ?>" />
+				<input type="text" name="image-title[]" id="image-title[]" style="width: 100%;" placeholder="Image Title" value="<?php echo get_the_title($id); ?>">
+				<input type="text" name="image-description[]" id="image-description[]" style="width: 100%;" placeholder="Image Description" value="<?php echo $attachment->post_content; ?>">
+				<select name="filters[<?php echo $id; ?>][]" multiple="multiple" id="filters" style="width: 100%;">
+					<?php
+					foreach ($all_category as $key => $value) {
+						if($key != 0) {
+						?><strong>
+							<option value="<?php echo $key; ?>"><?php echo ucwords($value); ?>
+							</option>
+						</strong><?php
+						}
+					}
+					?>
+				</select>
+				<input type="button" name="remove-image" id="remove-image" style="width: 100%;" class="button" value="Delete">
+			</li>
+			<?php
+		}  // end of ajax callback
+
+		public function _ajax_sg() {
+			echo $this->_sg_ajax_callback_function($_POST['SGimageid']);
+			die;
+		}  // end of ajax sg 
+
+		public function _sg_save_settings($id) {			
+			if(isset($_POST['sg_save_nonce'])) {
+				if (!isset( $_POST['sg_save_nonce'] ) || ! wp_verify_nonce( $_POST['sg_save_nonce'], 'sg_save_settings' ) ) {
+				   print 'Sorry, your nonce did not verify.';
+				   exit;
+				} else {
+
+					$image_ids 				= $_POST['image-ids'];
+					$categories 			= $_POST['categories'];
+					$image_titles 			= $_POST['image-title'];
+					$image_descriptions 	= $_POST['image-description'];
+
+
+					$i = 0;
+					foreach($image_ids as $image_id) {
+						$single_image_update = array(
+							'ID'           => $image_id,
+							'post_title'   => $image_titles[$i],
+							'post_content'   => $image_descriptions[$i],						
+						);
+						wp_update_post( $single_image_update );
+						$i++;
+					}
+					
+					update_option('simple_gallery_categories' . $id, $categories);
+
+					$simple_gallery_shortcode_setting = "simple_gallery" . $id;
+					update_post_meta(
+						$id, 
+						$simple_gallery_shortcode_setting, 
+						base64_encode(serialize($_POST))
+					);
+				}
+			}
+		}
+
+	}
+	$sg_object = new Simple_Gallery();
+	require_once('simple-gallery-shortcode.php');
+}
+?>
