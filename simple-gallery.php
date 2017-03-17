@@ -210,10 +210,6 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 					foreach( $images['image-ids'] as $id ) {
 						$thumb 		= wp_get_attachment_image_src( $id, 'medium', true );
 						$attachment = get_post( $id ); 
-						if( ! $images['extra-field'][$id] ) {
-							$images['extra-field'][$id] = '';
-						}
-
 
 						if( isset( $filters[$id] ) ) {
 							$selected_filters_array = $filters[$id];
@@ -232,8 +228,12 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 							
 							<select name="filters[<?php echo $id; ?>][]" multiple="multiple" id="filters" style="width: 100%;">
 								<?php
-								foreach ($all_category as $key => $value) {																			
-									?><strong><option value="<?php echo $key; ?>" <?php if(count($selected_filters_array)) { if(in_array($key, $selected_filters_array)) echo "selected=selected"; } ?>><?php echo ucwords($value); ?></option></strong><?php
+								foreach ($all_category as $key => $value) {														
+									?>
+									<option value="<?php echo $key; ?>" 
+									<?php 
+									  if(isset($selected_filters_array)) { if(in_array($key, $selected_filters_array)) echo "selected=selected"; } ?>><?php echo $value; ?></option>
+									<?php
 								}							
 								?>
 							</select>
