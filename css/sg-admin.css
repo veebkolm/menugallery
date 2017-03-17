@@ -24,7 +24,7 @@ ul#remove-images > li.images div.thumb-container img {
 	width: 100%; 
 }
 #add-new-images {
-	width: 100%; text-align: center; padding: 4px 10px; background: #fefefe;
+	text-align: center; padding: 4px 10px; background: #fefefe;
 	font-size: 16px;
 	cursor: pointer;
 	transition: all .3s ease-in-out;

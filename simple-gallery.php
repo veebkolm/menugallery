@@ -237,7 +237,7 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 					<p style="font-size: 20px;"><i class="menu-icon dashicons dashicons-format-image"></i>
 					<?php _e('Add Image', PFG_TXTDM); ?></p>		
 			</div>
-			<div style="width: 100%; text-align: center; padding: 4px 10px; background: #fefefe;">
+			<div style="text-align: center; padding: 4px 10px; background: #fefefe;">
 				<p>Shortcode: <span id="shortcode"><?php echo "[sg id=".$post->ID."]"; ?></span></p>
 			</div>
 			<div id="image_upload">
@@ -249,7 +249,7 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 				));
 		
 				$all_category = get_option( 'simple_gallery_categories' . $post->ID );
-				$filters = $images['filters'];
+				$filters = isset($images['filters']) ? $images['filters'] : [];
 
 				// check if there are images already attached
 				if ( isset( $images['image-ids'] ) ) {
