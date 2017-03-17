@@ -3,15 +3,31 @@
   float: left;
   width: 100%;
 }
+
 #filter-container {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  justify-content: space-between; 
+  justify-content: flex-start; 
+  margin-bottom: 20px;
 }
 .filter-button {
-  padding: 5px 10px;
+  padding:0px 5px;
+  margin: 0px 5px;
   cursor: pointer;
+  transition: all .3s linear;
+  border: 1px solid transparent;
+}
+.filter-button:hover {
+  transition: all .3s linear;
+  border-bottom: 1px solid rgba(0,0,0,0.3) !important;
+  box-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+}
+.active.filter-button {
+  border-bottom: 1px solid rgba(0,0,0,0.3) !important;
+  
+}
+
 }
 #gallery-content{
   float: left;
@@ -80,3 +96,8 @@
 .pic img {
     transition: .5s;
 } 
+
+.entry-content a:hover,
+.entry-content a {
+  box-shadow: none !important;
+}
