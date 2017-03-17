@@ -113,13 +113,14 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 		} // end of post type function
 
 		public function admin_add_meta_box() {
-			add_meta_box( '1', __('Categories', SG_TXTDM), array(&$this, 'sg_categories'), 'simple_gallery', 'normal', 'high' );
 			add_meta_box( '2', __('Add Simple Gallery', SG_TXTDM), array(&$this, 'sg_image_upload'), 'simple_gallery', 'normal', 'default' );
-			add_meta_box( '3', __('Settings', SG_TXTDM), array(&$this, 'sg_settings'), 'simple_gallery', 'normal', 'default' );
+			add_meta_box( '1', __('Settings', SG_TXTDM), array(&$this, 'sg_settings'), 'simple_gallery', 'normal', 'default' );
 		}
 
 		public function sg_settings($post) {
 			wp_enqueue_style( 'checkbox', SG_URL . 'css/checkbox.css' );
+
+			$all_category = get_option('simple_gallery_categories' . $post->ID);
 
 			$settings = unserialize(base64_decode(
 				get_post_meta( $post->ID, 'simple_gallery'.$post->ID, true )
@@ -129,6 +130,18 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 
 			?>
 			<table class="settings">
+				<tr>
+					<td>Categories<span class="add_field_button">+ Add category</span></td>
+					<td class="input_fields_wrap">
+						<?php for( $i = 0; $i < count( $all_category); $i++ ): ?>
+						<div><input value="<?php echo isset($all_category[$i]) ? $all_category[$i] : ''; ?>" type="text" name="categories[]"/><span class="dashicons dashicons-dismiss remove_field" style="margin-top:3px; margin-left: 5px;"></span></div>
+						<?php endfor; ?>
+					</td>
+				</tr>
+			  <tr>
+			  	<td>Default category name</td>
+			  	<td><input type="text" name="default-category" value="<?php echo $default_category;?>"></td>
+			  </tr>
 			  <tr>
 			  	<td>Lightbox</td>
 			    <td>
@@ -136,38 +149,7 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 			      <label for="lightbox"><i class="toggle"></i></label>     
 			    </td>
 			  </tr>
-			  <tr>
-			  	<td>Default category name</td>
-			  	<td><input type="text" name="default-category" value="<?php echo $default_category;?>"></td>
-			  </tr>
 			</table>
-			<?php
-		}
-
-		public function sg_categories($post) {
-			$all_category = get_option('simple_gallery_categories' . $post->ID);
-			if(is_array($all_category)){
-				if(!isset($all_category[0])) {
-					$all_category[0] = "all";
-					update_option('simple_gallery_categories' . $post->ID, $all_category);
-				}
-			} else {
-				$all_category[0] = 'all';
-				update_option('simple_gallery_categories' . $post->ID, $all_category);
-			}
-			?>
-			<div id="categories">
-				<div class="input_fields_wrap">
-				    <button class="add_field_button" style="margin-bottom: 10px;">Add category</button>
-				    <?php
-					for( $i = 0; $i < count($all_category); $i++ ) {
-						?>
-						<div><input value="<?php echo $all_category[$i]; ?>" type="text" name="categories[]"/><span class="dashicons dashicons-dismiss remove_field" style="margin-top:3px; margin-left: 5px;"></span></div>
-						<?php
-					}
-						?>
-				</div>
-			</div>
 			<script type="text/javascript">
 				jQuery(document).ready(function() {
 				    var wrapper         = jQuery(".input_fields_wrap"); // Fields wrapper
@@ -182,11 +164,12 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 				   
 				    jQuery(wrapper).on("click",".remove_field", function(e){ // user click on remove text
 				    	if (confirm('Are sure to delete this images?')) {
-				    		e.preventDefault(); jQuery(this).parent('div').fadeOut(700, function() {
-		                        jQuery(this).remove();
-		                    });
-		                    x--;
-		                }
+				    		e.preventDefault(); 
+				    		jQuery(this).parent('div').fadeOut(700, function() {
+                  jQuery(this).remove();
+                });
+                x--;
+              }
 				        
 				    })
 				});			

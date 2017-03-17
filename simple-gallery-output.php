@@ -1,5 +1,6 @@
 <?php
 $all_category = get_option( 'simple_gallery_categories' . $gallery_id );
+$all_category = empty($all_category) ? [] : $all_category;
 $allimages = array(  'p' => $gallery_id, 'post_type' => 'simple_gallery', 'orderby' => 'ASC');
 $loop = new WP_Query( $allimages );
 
@@ -33,7 +34,7 @@ foreach($gallery_settings['image-ids'] as $attachment_id) {
 	$full = wp_get_attachment_image_src($attachment_id, 'full', true);
 	// $postthumbnail = wp_get_attachment_image_src($attachment_id, 'post-thumbnail', true);
 	$attachment_details = get_post( $attachment_id );
-	$filters = $gallery_settings['filters'][$attachment_id];
+	$filters = isset($gallery_settings['filters'][$attachment_id]) ? $gallery_settings['filters'][$attachment_id] : [];
 	$href = get_permalink( $attachment_details->ID );
 	$src = $attachment_details->guid;
 	$title = $attachment_details->post_title;
