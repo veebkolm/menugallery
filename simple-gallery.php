@@ -127,7 +127,10 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 			));
 			$default_category = isset($settings['default-category']) ? $settings['default-category'] : '';
 			$lightbox = isset($settings['lightbox']) ? $settings['lightbox'] : false;
-
+			$large = isset($settings['large-grid']) ? $settings['large-grid'] : 3 ;
+			$medium = isset($settings['medium-grid']) ? $settings['medium-grid'] : 2 ;
+			$smaller = isset($settings['smaller-grid']) ? $settings['smaller-grid'] : 2 ;
+			$small = isset($settings['small-grid']) ? $settings['small-grid'] : 1 ;
 			?>
 			<table class="settings">
 				<tr>
@@ -154,7 +157,7 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 			    <td>
 			      <select name="large-grid">
 			      	<?php for($i = 1; $i < 5; $i++): ?>
-								<option value="<?php echo $i; ?>" <?php if ($settings['large-grid'] == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+								<option value="<?php echo $i; ?>" <?php if ($large == $i) echo 'selected'; ?>><?php echo $i; ?></option>
 			      	<?php endfor; ?>
 			      </select>
 			    </td>
@@ -164,7 +167,7 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 			    <td>
 			      <select name="medium-grid">
 			      	<?php for($i = 1; $i < 5; $i++): ?>
-								<option value="<?php echo $i; ?>" <?php if ($settings['medium-grid'] == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+								<option value="<?php echo $i; ?>" <?php if ($medium == $i) echo 'selected'; ?>><?php echo $i; ?></option>
 			      	<?php endfor; ?>
 			      </select>
 			    </td>
@@ -174,7 +177,7 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 			    <td>
 			      <select name="smaller-grid">
 			      	<?php for($i = 1; $i < 5; $i++): ?>
-								<option value="<?php echo $i; ?>" <?php if ($settings['smaller-grid'] == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+								<option value="<?php echo $i; ?>" <?php if ($smaller == $i) echo 'selected'; ?>><?php echo $i; ?></option>
 			      	<?php endfor; ?>
 			      </select>
 			    </td>
@@ -184,7 +187,7 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 			    <td>
 			      <select name="small-grid">
 			      	<?php for($i = 1; $i < 5; $i++): ?>
-								<option value="<?php echo $i; ?>" <?php if ($settings['small-grid'] == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+								<option value="<?php echo $i; ?>" <?php if ($small == $i) echo 'selected'; ?>><?php echo $i; ?></option>
 			      	<?php endfor; ?>
 			      </select>
 			    </td>
