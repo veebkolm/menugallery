@@ -42,23 +42,27 @@
 .lazyload {
   background: #f7f7f7;
 }
-div.img-text {
-    margin: 0 auto;
+.pic .img-text {
+    opacity: 0;
     position: absolute;
-    text-align: center;
-    left: 0; right: 0;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.pic:hover .img-text {
+  opacity: 1;
+}
+
+.pic .img-text > * {
+  margin: 0;
+  padding: 1px 5px;
 }
 
 .pic img {
-    transition: .5s;
-}
-
-.pic:hover div.img-text {
-    opacity: 1;
-    transition: .5s;
-}
-
-.pic p {
     transition: .5s;
 }
 
@@ -67,6 +71,10 @@ div.img-text {
     transition: .5s;
     overflow: hidden;
     transform: scale(1.1);
+}
+
+.pic {
+    overflow: hidden;
 }
 
 .pic img {
