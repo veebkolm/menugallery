@@ -23,3 +23,20 @@ ul#remove-images > li.images div.thumb-container {
 ul#remove-images > li.images div.thumb-container img {
 	width: 100%; 
 }
+#add-new-images {
+	width: 100%; text-align: center; padding: 4px 10px; background: #fefefe;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all .3s ease-in-out;
+}
+#add-new-images:hover {
+	color: red;
+}
+#shortcode {
+	font-family: 'Lato';
+	background-color: rgba(0,0,0,0.3);
+	padding: 5px;
+	font-weight: 700;
+	font-size: 16px;
+	color: #fff;
+}

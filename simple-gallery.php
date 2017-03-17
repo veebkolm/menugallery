@@ -113,7 +113,7 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 		} // end of post type function
 
 		public function admin_add_meta_box() {
-			add_meta_box( '2', __('Add Simple Gallery', SG_TXTDM), array(&$this, 'sg_image_upload'), 'simple_gallery', 'normal', 'default' );
+			add_meta_box( '2', __('Pictures', SG_TXTDM), array(&$this, 'sg_image_upload'), 'simple_gallery', 'normal', 'default' );
 			add_meta_box( '1', __('Settings', SG_TXTDM), array(&$this, 'sg_settings'), 'simple_gallery', 'normal', 'default' );
 		}
 
@@ -185,7 +185,13 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 			wp_enqueue_media();	
 
 			?>
-
+			<div id="add-new-images" class="new-images">					
+					<p style="font-size: 20px;"><i class="menu-icon dashicons dashicons-format-image"></i>
+					<?php _e('Add Image', PFG_TXTDM); ?></p>		
+			</div>
+			<div style="width: 100%; text-align: center; padding: 4px 10px; background: #fefefe;">
+				<p>Shortcode: <span id="shortcode"><?php echo "[sg id=".$post->ID."]"; ?></span></p>
+			</div>
 			<div id="image_upload">
 			<ul id="remove-images" class="sbox">
 				<?php
@@ -239,11 +245,6 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 				}  // end of if isset( $images['image-ids'] )
 				?>
 			</ul>
-				<div name="add-new-images" id="add-new-images" class="new-images">
-					<div class="menu-icon dashicons dashicons-format-image"></div>
-					<div class="add-text"><?php _e('Add Image', PFG_TXTDM); ?></div>
-				</div>
-				<p><?php echo "[sg id=".$post->ID."]"; ?></p>
 			</div>
 			<?php
 			require_once('simple-gallery-settings.php');
