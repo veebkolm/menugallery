@@ -149,6 +149,46 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 			      <label for="lightbox"><i class="toggle"></i></label>     
 			    </td>
 			  </tr>
+			  <tr>
+			  	<td>Grid size | 1080px+</td>
+			    <td>
+			      <select name="large-grid">
+			      	<?php for($i = 1; $i < 5; $i++): ?>
+								<option value="<?php echo $i; ?>" <?php if ($settings['large-grid'] == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+			      	<?php endfor; ?>
+			      </select>
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td>Grid size | 768px+</td>
+			    <td>
+			      <select name="medium-grid">
+			      	<?php for($i = 1; $i < 5; $i++): ?>
+								<option value="<?php echo $i; ?>" <?php if ($settings['medium-grid'] == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+			      	<?php endfor; ?>
+			      </select>
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td>Grid size | 640px+</td>
+			    <td>
+			      <select name="smaller-grid">
+			      	<?php for($i = 1; $i < 5; $i++): ?>
+								<option value="<?php echo $i; ?>" <?php if ($settings['smaller-grid'] == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+			      	<?php endfor; ?>
+			      </select>
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td>Grid size | 320px+</td>
+			    <td>
+			      <select name="small-grid">
+			      	<?php for($i = 1; $i < 5; $i++): ?>
+								<option value="<?php echo $i; ?>" <?php if ($settings['small-grid'] == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+			      	<?php endfor; ?>
+			      </select>
+			    </td>
+			  </tr>
 			</table>
 			<script type="text/javascript">
 				jQuery(document).ready(function() {

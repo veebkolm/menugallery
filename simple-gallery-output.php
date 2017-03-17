@@ -2,9 +2,37 @@
 $all_category = get_option( 'simple_gallery_categories' . $gallery_id );
 $allimages = array(  'p' => $gallery_id, 'post_type' => 'simple_gallery', 'orderby' => 'ASC');
 $loop = new WP_Query( $allimages );
+$widths = [
+	'1' => '100%',
+	'2' => '44%',
+	'3' => '30%',
+	'4' => '22%',
+];
 
 if( isset($gallery_settings['image-ids'] ) ) {
 ?>
+<style>	
+@media screen and (max-width: 1080px) {
+  #gallery-content-center .pic {
+    max-width: <?php echo $widths[$gallery_settings['large-grid']]; ?> !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  #gallery-content-center .pic {
+    max-width: <?php echo $widths[$gallery_settings['medium-grid']]; ?> !important;
+  }
+}
+@media screen and (max-width: 640px) {
+  #gallery-content-center .pic {
+    max-width: <?php echo $widths[$gallery_settings['smaller-grid']]; ?> !important;
+  }
+}
+@media screen and (max-width: 320px) {
+  #gallery-content-center .pic {
+    max-width: <?php echo $widths[$gallery_settings['small-grid']]; ?> !important;
+  }
+}
+</style>
 <div id="gallery">
 
 <div id="gallery-header">
