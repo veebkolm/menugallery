@@ -42,35 +42,24 @@
 .lazyload {
   background: #f7f7f7;
 }
-p.img-description {
+div.img-text {
     margin: 0 auto;
     position: absolute;
-    top: calc(50% + 10px);
     text-align: center;
     left: 0; right: 0;
-}
-
-p.img-title {
-    position: absolute;
-    top: calc(50% - 10px);
-    margin: 0 auto;
-    left: 0; right: 0;
-    text-align: center;
 }
 
 .pic img {
     transition: .5s;
 }
 
-.pic:hover p {
+.pic:hover div.img-text {
     opacity: 1;
     transition: .5s;
 }
 
 .pic p {
-    opacity: 0;
     transition: .5s;
-    cursor: none;
 }
 
 .pic:hover img {
@@ -78,10 +67,6 @@ p.img-title {
     transition: .5s;
     overflow: hidden;
     transform: scale(1.1);
-}
-
-.pic {
-    overflow: hidden;
 }
 
 .pic img {

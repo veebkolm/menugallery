@@ -49,8 +49,10 @@ foreach($gallery_settings['image-ids'] as $attachment_id) {
 			 		<a href="<?php echo $full[0]; ?>" data-lightbox="image-1"> 
 			 	<?php endif; ?>
 					<img data-src="<?php echo $medium[0]; ?>" class="lazy-img"/>
-					<p class="img-title"><?php echo $title; ?></p>
-					<p class="img-description"><?php echo $description; ?></p>
+					<div class="img-text">
+						<p class="img-title"><?php echo $title; ?></p>
+						<p class="img-description"><?php echo $description; ?></p>
+					</div>
 				<?php if ($lightbox): ?>
 			 		</a>
 			 	<?php endif; ?>
