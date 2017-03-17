@@ -113,8 +113,35 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 		} // end of post type function
 
 		public function admin_add_meta_box() {
-			add_meta_box( '2', __('Add Simple Gallery', SG_TXTDM), array(&$this, 'sg_image_upload'), 'simple_gallery', 'normal', 'default' );
 			add_meta_box( '1', __('Categories', SG_TXTDM), array(&$this, 'sg_categories'), 'simple_gallery', 'normal', 'high' );
+			add_meta_box( '2', __('Add Simple Gallery', SG_TXTDM), array(&$this, 'sg_image_upload'), 'simple_gallery', 'normal', 'default' );
+			add_meta_box( '3', __('Settings', SG_TXTDM), array(&$this, 'sg_settings'), 'simple_gallery', 'normal', 'default' );
+		}
+
+		public function sg_settings($post) {
+			wp_enqueue_style( 'checkbox', SG_URL . 'css/checkbox.css' );
+
+			$settings = unserialize(base64_decode(
+				get_post_meta( $post->ID, 'simple_gallery'.$post->ID, true )
+			));
+			$default_category = isset($settings['default-category']) ? $settings['default-category'] : '';
+			$lightbox = isset($settings['lightbox']) ? $settings['lightbox'] : false;
+
+			?>
+			<table class="settings">
+			  <tr>
+			  	<td>Lightbox</td>
+			    <td>
+			      <input type="checkbox" name="lightbox" id="lightbox" <?php echo $lightbox ? 'checked' : ''; ?>>
+			      <label for="lightbox"><i class="toggle"></i></label>     
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td>Default category name</td>
+			  	<td><input type="text" name="default-category" value="<?php echo $default_category;?>"></td>
+			  </tr>
+			</table>
+			<?php
 		}
 
 		public function sg_categories($post) {
@@ -286,7 +313,6 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 					$categories 			= $_POST['categories'];
 					$image_titles 			= $_POST['image-title'];
 					$image_descriptions 	= $_POST['image-description'];
-
 
 					$i = 0;
 					foreach($image_ids as $image_id) {

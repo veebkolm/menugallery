@@ -7,9 +7,9 @@ if( isset($gallery_settings['image-ids'] ) ) {
 ?>
 <div id="gallery">
 
-	<div id="gallery-header">
+<div id="gallery-header">
 		<div id="filter-container">
-			<div class="filter-button" data-type="*">All</div>
+			<div class="filter-button" data-type="*"><?php echo $default_category; ?></div>
 			<?php foreach( $all_category as $category ) { ?>
 			<div class="filter-button" data-type="<?php echo $category; ?>"><?php echo ucfirst($category); ?></div>
 			<?php } ?>
@@ -17,6 +17,7 @@ if( isset($gallery_settings['image-ids'] ) ) {
 	</div> <!-- end #gallery-header  -->
 	<div id="gallery-content" style="display: none;">
 		<div id="gallery-content-center">
+
 
 <?php 
 while ( $loop->have_posts() ) : $loop->the_post();
@@ -29,7 +30,7 @@ foreach($gallery_settings['image-ids'] as $attachment_id) {
 	$thumbnail = wp_get_attachment_image_src($attachment_id, 'thumbnail', true);
 	$medium = wp_get_attachment_image_src($attachment_id, 'medium', true);
 	$large = wp_get_attachment_image_src($attachment_id, 'large', true);
-	// $full = wp_get_attachment_image_src($attachment_id, 'full', true);
+	$full = wp_get_attachment_image_src($attachment_id, 'full', true);
 	// $postthumbnail = wp_get_attachment_image_src($attachment_id, 'post-thumbnail', true);
 	$attachment_details = get_post( $attachment_id );
 	$filters = $gallery_settings['filters'][$attachment_id];
@@ -37,15 +38,21 @@ foreach($gallery_settings['image-ids'] as $attachment_id) {
 	$src = $attachment_details->guid;
 	$title = $attachment_details->post_title;
 	$description = $attachment_details->post_content;
+	$categories = '';
+	foreach($filters as $f) {
+		$categories .= $all_category[$f] . ' ';
+	}
 ?>
-			<div class="pic <?php 
-					foreach($filters as $f) {
-						echo $all_category[$f] . ' ';
-					}
-				?>">
-				<img data-src="<?php echo $medium[0]; ?>" class="lazy-img"/>
-				<p class="img-title"><?php echo $title; ?></p>
-				<p class="img-description"><?php echo $description; ?></p>
+			<div class="pic <?php echo $categories; ?>">
+				<?php if ($lightbox): ?>
+			 		<a href="<?php echo $full[0]; ?>" data-lightbox="image-1"> 
+			 	<?php endif; ?>
+					<img data-src="<?php echo $medium[0]; ?>" class="lazy-img"/>
+					<p class="img-title"><?php echo $title; ?></p>
+					<p class="img-description"><?php echo $description; ?></p>
+				<?php if ($lightbox): ?>
+			 		</a>
+			 	<?php endif; ?>
  			</div>
 
 <?php
