@@ -1,9 +1,14 @@
+var x = 1;
 jQuery('#filter-container').on('click', function() {
 	var $imgs = jQuery('.lazy-img');
 	$imgs.each(function() {
 		jQuery(this).attr('src', jQuery(this).data('src'));
 	});
-	jQuery("#gallery-content").show();
+	// this is a hack
+	if (1 < x) {
+		jQuery("#gallery-content").show();
+	}
+	x++;
 });
 
 jQuery('#gallery').each(function(){
