@@ -27,7 +27,6 @@
 .active.filter-button {
   border-bottom: 1px solid rgba(0,0,0,0.3) !important; 
 }
-}
 #gallery-content{
   float: left;
   width: 100%;
@@ -66,6 +65,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     height: 100%;
 }
 .pic:hover .img-text {
@@ -98,5 +98,9 @@
 
 .entry-content a:hover,
 .entry-content a {
+  box-shadow: none !important;
+}
+.lightbox-link,
+.lightbox-link:hover {
   box-shadow: none !important;
 }

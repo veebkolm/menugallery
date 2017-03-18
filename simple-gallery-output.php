@@ -4,34 +4,44 @@ $allimages = array(  'p' => $gallery_id, 'post_type' => 'simple_gallery', 'order
 $loop = new WP_Query( $allimages );
 $widths = [
 	'1' => '100%',
-	'2' => '44%',
-	'3' => '30%',
-	'4' => '22%',
+	'2' => 'calc(50% - 10px)',
+	'3' => 'calc(33% - 10px)',
+	'4' => 'calc(25% - 10px)',
+	'5' => 'calc(20% - 10px)',
+	'6' => 'calc(25% - 10px)',
+	'7' => 'calc(16.66% - 10px)',
+	'8' => 'calc(12.5% - 10px)',
 ];
 
 if( isset($gallery_settings['image-ids'] ) ) {
 ?>
 <style>	
-@media screen and (max-width: 1080px) {
+#gallery-content-center .pic {
+	max-width: <?php echo $widths[$gallery_settings['phone']]; ?> !important;
+}
+@media screen and (min-width: 640px) {
   #gallery-content-center .pic {
-    max-width: <?php echo $widths[$gallery_settings['large-grid']]; ?> !important;
+    max-width: <?php echo $widths[$gallery_settings['tablet-portrait']]; ?> !important;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 940px) {
   #gallery-content-center .pic {
-    max-width: <?php echo $widths[$gallery_settings['medium-grid']]; ?> !important;
+    max-width: <?php echo $widths[$gallery_settings['tablet-landscape']]; ?> !important;
   }
 }
-@media screen and (max-width: 640px) {
+@media screen and (min-width: 1200px) {
   #gallery-content-center .pic {
-    max-width: <?php echo $widths[$gallery_settings['smaller-grid']]; ?> !important;
+    max-width: <?php echo $widths[$gallery_settings['desktop']]; ?> !important;
   }
 }
-@media screen and (max-width: 320px) {
+@media screen and (min-width: 1800px) {
   #gallery-content-center .pic {
-    max-width: <?php echo $widths[$gallery_settings['small-grid']]; ?> !important;
+    max-width: <?php echo $widths[$gallery_settings['big']]; ?> !important;
   }
 }
+
+
+
 </style>
 <div id="gallery">
 
@@ -79,7 +89,7 @@ foreach($gallery_settings['image-ids'] as $attachment_id) {
 ?>
 			<div class="pic <?php echo $categories; ?>">
 				<?php if ($lightbox): ?>
-			 		<a href="<?php echo $full[0]; ?>" data-lightbox="image-1"> 
+			 		<a href="<?php echo $full[0]; ?>" data-lightbox="image-1" class="lightbox-link"> 
 			 	<?php endif; ?>
 					<img data-src="<?php echo $medium[0]; ?>" class="lazy-img"/>
 					<div class="img-text">

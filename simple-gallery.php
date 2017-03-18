@@ -127,10 +127,11 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 			));
 			$default_category = isset($settings['default-category']) ? $settings['default-category'] : '';
 			$lightbox = isset($settings['lightbox']) ? $settings['lightbox'] : false;
-			$large = isset($settings['large-grid']) ? $settings['large-grid'] : 3 ;
-			$medium = isset($settings['medium-grid']) ? $settings['medium-grid'] : 2 ;
-			$smaller = isset($settings['smaller-grid']) ? $settings['smaller-grid'] : 2 ;
-			$small = isset($settings['small-grid']) ? $settings['small-grid'] : 1 ;
+			$big = isset($settings['big']) ? $settings['big'] : 6 ;
+			$desktop = isset($settings['desktop']) ? $settings['desktop'] : 4 ;
+			$tablet_landscape = isset($settings['tablet-landscape']) ? $settings['tablet-landscape'] : 3 ;
+			$tablet_portrait = isset($settings['tablet-portrait']) ? $settings['tablet-portrait'] : 2 ;
+			$phone = isset($settings['phone']) ? $settings['phone'] : 1 ;
 			?>
 			<table class="settings">
 				<tr>
@@ -153,41 +154,51 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 			    </td>
 			  </tr>
 			  <tr>
-			  	<td>Grid size | 1080px+</td>
+			  	<td>Grid size | Big 1800px+</td>
 			    <td>
-			      <select name="large-grid">
-			      	<?php for($i = 1; $i < 5; $i++): ?>
-								<option value="<?php echo $i; ?>" <?php if ($large == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+			      <select name="big">
+			      	<?php for($i = 1; $i < 9; $i++): ?>
+								<option value="<?php echo $i; ?>" <?php if ($big == $i) echo 'selected'; ?>><?php echo $i; ?></option>
 			      	<?php endfor; ?>
 			      </select>
 			    </td>
 			  </tr>
 			  <tr>
-			  	<td>Grid size | 768px+</td>
+			  	<td>Grid size | Desktop 1200px+</td>
 			    <td>
-			      <select name="medium-grid">
-			      	<?php for($i = 1; $i < 5; $i++): ?>
-								<option value="<?php echo $i; ?>" <?php if ($medium == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+			      <select name="desktop">
+			      	<?php for($i = 1; $i < 8; $i++): ?>
+								<option value="<?php echo $i; ?>" <?php if ($desktop == $i) echo 'selected'; ?>><?php echo $i; ?></option>
 			      	<?php endfor; ?>
 			      </select>
 			    </td>
 			  </tr>
 			  <tr>
-			  	<td>Grid size | 640px+</td>
+			  	<td>Grid size | Tablet landscape 940px+</td>
 			    <td>
-			      <select name="smaller-grid">
+			      <select name="tablet-landscape">
 			      	<?php for($i = 1; $i < 5; $i++): ?>
-								<option value="<?php echo $i; ?>" <?php if ($smaller == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+								<option value="<?php echo $i; ?>" <?php if ($tablet_landscape == $i) echo 'selected'; ?>><?php echo $i; ?></option>
 			      	<?php endfor; ?>
 			      </select>
 			    </td>
 			  </tr>
 			  <tr>
-			  	<td>Grid size | 320px+</td>
+			  	<td>Grid size | Tablet portrait 640px+</td>
 			    <td>
-			      <select name="small-grid">
+			      <select name="tablet-portrait">
 			      	<?php for($i = 1; $i < 5; $i++): ?>
-								<option value="<?php echo $i; ?>" <?php if ($small == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+								<option value="<?php echo $i; ?>" <?php if ($tablet_portrait == $i) echo 'selected'; ?>><?php echo $i; ?></option>
+			      	<?php endfor; ?>
+			      </select>
+			    </td>
+			  </tr>
+			  <tr>
+			  	<td>Grid size | Phone 640px- </td>
+			    <td>
+			      <select name="phone">
+			      	<?php for($i = 1; $i < 5; $i++): ?>
+								<option value="<?php echo $i; ?>" <?php if ($phone == $i) echo 'selected'; ?>><?php echo $i; ?></option>
 			      	<?php endfor; ?>
 			      </select>
 			    </td>
