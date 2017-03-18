@@ -195,11 +195,13 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 			</table>
 			<script type="text/javascript">
 				jQuery(document).ready(function() {
+						// http://jsfiddle.net/techfoobar/xQqbR/
 						jQuery('option').mousedown(function(e) {
 						    e.preventDefault();
 						    jQuery(this).prop('selected', jQuery(this).prop('selected') ? false : true);
 						    return false;
 						});
+						//
 				    var wrapper         = jQuery(".input_fields_wrap"); // Fields wrapper
 				    var add_button      = jQuery(".add_field_button"); // Add button ID
 				   
