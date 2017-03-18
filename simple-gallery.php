@@ -3,8 +3,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;  // exit if accessed directly
 /**
 Plugin Name: Simple Gallery
 Description: A simple gallery plugin for Wordpress
-Version: 0.0.1
-Author: Galilei
+Version: 0.0.9
+Author: Erik Schults
 License: MIT
 Text Domain: SG_TXTDM
 Domain Path: /languages
