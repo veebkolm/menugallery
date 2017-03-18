@@ -1,3 +1,5 @@
+#gallery p{margin:0 !important;padding:0 !important;};
+#gallery br{display:none !important};
 #gallery{
   font-family: 'Source Sans Pro', sans-serif;
   float: left;
@@ -12,12 +14,13 @@
   margin-bottom: 20px;
 }
 .filter-button {
-  font-family: "Courier New", Courier, monospace;
-  padding:0px 5px;
+  font-family: lato;
+  padding: 0px 5px;
   margin: 0px 5px;
   cursor: pointer;
   transition: all .3s linear;
   border: 1px solid transparent;
+  font-weight: 600;
 }
 .filter-button:hover {
   transition: all .3s linear;
