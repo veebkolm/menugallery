@@ -17,26 +17,26 @@ if( isset($gallery_settings['image-ids'] ) ) {
 ?>
 <style>	
 #gallery-content-center .pic {
-	max-width: <?php echo $widths[$gallery_settings['phone']]; ?> !important;
+	width: <?php echo $widths[$gallery_settings['phone']]; ?> !important;
 }
 @media screen and (min-width: 640px) {
   #gallery-content-center .pic {
-    max-width: <?php echo $widths[$gallery_settings['tablet-portrait']]; ?> !important;
+    width: <?php echo $widths[$gallery_settings['tablet-portrait']]; ?> !important;
   }
 }
 @media screen and (min-width: 940px) {
   #gallery-content-center .pic {
-    max-width: <?php echo $widths[$gallery_settings['tablet-landscape']]; ?> !important;
+    width: <?php echo $widths[$gallery_settings['tablet-landscape']]; ?> !important;
   }
 }
 @media screen and (min-width: 1200px) {
   #gallery-content-center .pic {
-    max-width: <?php echo $widths[$gallery_settings['desktop']]; ?> !important;
+    width: <?php echo $widths[$gallery_settings['desktop']]; ?> !important;
   }
 }
 @media screen and (min-width: 1800px) {
   #gallery-content-center .pic {
-    max-width: <?php echo $widths[$gallery_settings['big']]; ?> !important;
+    width: <?php echo $widths[$gallery_settings['big']]; ?> !important;
   }
 }
 
