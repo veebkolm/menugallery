@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;  // exit if accessed directly
 /**
 Plugin Name: Simple Gallery
 Description: A simple gallery plugin for Wordpress
-Version: 0.0.9
+Version: 10.0.9
 Author: Erik Schults
 License: MIT
 Text Domain: SG_TXTDM
@@ -285,6 +285,9 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 							</div>
 							<input type="hidden" id="image-ids[]" name="image-ids[]" value="<?php echo $id; ?>" />
 							<input type="text" name="image-title[]" id="image-title[]" style="width: 100%;" placeholder="Image Title" value="<?php echo get_the_title($id); ?>">
+
+							<input type="text" name="image-alt-text[]" id="image-alt-text[]" style="width: 100%;" placeholder="Image Alt Text" value="<?php echo $attachment->post_excerpt; ?>">
+
 							<input type="text" name="image-description[]" id="image-description[]" style="width: 100%;" placeholder="Image Description" value="<?php echo $attachment->post_content; ?>">
 							
 							<select name="filters[<?php echo $id; ?>][]" multiple="multiple" id="filters" style="width: 100%;">
@@ -324,6 +327,9 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 				</div>
 				<input type="hidden" id="image-ids[]" name="image-ids[]" value="<?php echo $id; ?>" />
 				<input type="text" name="image-title[]" id="image-title[]" style="width: 100%;" placeholder="Image Title" value="<?php echo get_the_title($id); ?>">
+
+				<input type="text" name="image-alt-text[]" id="image-alt-text[]" style="width: 100%;" placeholder="Image Alt Text" value="<?php echo $attachment->post_excerpt; ?>">
+
 				<input type="text" name="image-description[]" id="image-description[]" style="width: 100%;" placeholder="Image Description" value="<?php echo $attachment->post_content; ?>">
 				<select name="filters[<?php echo $id; ?>][]" multiple="multiple" id="filters" style="width: 100%;">
 					<?php
@@ -358,13 +364,15 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 					$categories 			= $_POST['categories'];
 					$image_titles 			= $_POST['image-title'];
 					$image_descriptions 	= $_POST['image-description'];
+					$image_alt_text 	= $_POST['image-alt-text'];
 
 					$i = 0;
 					foreach($image_ids as $image_id) {
 						$single_image_update = array(
 							'ID'           => $image_id,
 							'post_title'   => $image_titles[$i],
-							'post_content'   => $image_descriptions[$i],						
+							'post_content'   => $image_descriptions[$i],
+							'post_excerpt'   => $image_alt_text[$i],												
 						);
 						wp_update_post( $single_image_update );
 						$i++;

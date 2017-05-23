@@ -77,6 +77,7 @@ foreach($gallery_settings['image-ids'] as $attachment_id) {
 	$src = $attachment_details->guid;
 	$title = $attachment_details->post_title;
 	$description = $attachment_details->post_content;
+	$alt_text = $attachment_details->post_excerpt;
 
 	$categories = '';
 	$filters = isset($gallery_settings['filters'][$attachment_id]) ? $gallery_settings['filters'][$attachment_id] : [];
@@ -89,13 +90,20 @@ foreach($gallery_settings['image-ids'] as $attachment_id) {
 ?>
 			<div class="pic <?php echo $categories; ?>">
 				<?php if ($lightbox): ?>
-			 		<a href="<?php echo $full[0]; ?>" data-lightbox="image-1" class="lightbox-link"> 
+			 		<a href="<?php echo $full[0]; ?>" data-lightbox="<?php echo $categories; ?>" class="lightbox-link"> 
 			 	<?php endif; ?>
 					<img data-src="<?php echo $medium[0]; ?>" class="lazy-img"/>
 					<div class="img-text">
-						<p class="img-title"><?php echo $title; ?></p>
+						<p class="img-title">
+<?php if(ICL_LANGUAGE_CODE == 'et'): ?>
+<?php echo $title; ?>
+<?php elseif(ICL_LANGUAGE_CODE == 'en'): ?>
+<?php echo $title; ?>
+<?php endif;?>
+
+</p>
 						<p class="img-description"><?php echo $description; ?></p>
-					</div>
+						</div>
 				<?php if ($lightbox): ?>
 			 		</a>
 			 	<?php endif; ?>
