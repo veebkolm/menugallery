@@ -284,11 +284,11 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 								<img src="<?php echo $thumb[0]; ?>" alt="">
 							</div>
 							<input type="hidden" id="image-ids[]" name="image-ids[]" value="<?php echo $id; ?>" />
-							<input type="text" name="image-title[]" id="image-title[]" style="width: 100%;" placeholder="Image Title" value="<?php echo get_the_title($id); ?>">
+							<input type="text" name="image-title[]" id="image-title[]" style="width: 100%;" placeholder="Inglisekeelne nimi" value="<?php echo get_the_title($id); ?>">
 
-							<input type="text" name="image-alt-text[]" id="image-alt-text[]" style="width: 100%;" placeholder="Image Alt Text" value="<?php echo $attachment->post_excerpt; ?>">
+							<input type="text" name="image-alt-text[]" id="image-alt-text[]" style="width: 100%;" placeholder="Eestikeelne nimi" value="<?php echo $attachment->post_excerpt; ?>">
 
-							<input type="text" name="image-description[]" id="image-description[]" style="width: 100%;" placeholder="Image Description" value="<?php echo $attachment->post_content; ?>">
+							<input type="text" name="image-description[]" id="image-description[]" style="width: 100%;" placeholder="Hind" value="<?php echo $attachment->post_content; ?>">
 							
 							<select name="filters[<?php echo $id; ?>][]" multiple="multiple" id="filters" style="width: 100%;">
 								<?php
@@ -326,11 +326,11 @@ if ( ! class_exists( 'Simple_Gallery' )) {
 					<img src="<?php echo $thumbnail[0]; ?>" alt="">
 				</div>
 				<input type="hidden" id="image-ids[]" name="image-ids[]" value="<?php echo $id; ?>" />
-				<input type="text" name="image-title[]" id="image-title[]" style="width: 100%;" placeholder="Image Title" value="<?php echo get_the_title($id); ?>">
+				<input type="text" name="image-title[]" id="image-title[]" style="width: 100%;" placeholder="Inglisekeelne nimi" value="<?php echo get_the_title($id); ?>">
 
-				<input type="text" name="image-alt-text[]" id="image-alt-text[]" style="width: 100%;" placeholder="Image Alt Text" value="<?php echo $attachment->post_excerpt; ?>">
+				<input type="text" name="image-alt-text[]" id="image-alt-text[]" style="width: 100%;" placeholder="Eestikeelne nimi" value="<?php echo $attachment->post_excerpt; ?>">
 
-				<input type="text" name="image-description[]" id="image-description[]" style="width: 100%;" placeholder="Image Description" value="<?php echo $attachment->post_content; ?>">
+				<input type="text" name="image-description[]" id="image-description[]" style="width: 100%;" placeholder="Hind" value="<?php echo $attachment->post_content; ?>">
 				<select name="filters[<?php echo $id; ?>][]" multiple="multiple" id="filters" style="width: 100%;">
 					<?php
 					foreach ($all_category as $key => $value) {
