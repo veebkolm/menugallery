@@ -96,7 +96,7 @@ foreach($gallery_settings['image-ids'] as $attachment_id) {
 					<div class="img-text">
 						<p class="img-title">
 <?php if(ICL_LANGUAGE_CODE == 'et'): ?>
-<?php echo $title; ?>
+<?php echo $alt_text; ?>
 <?php elseif(ICL_LANGUAGE_CODE == 'en'): ?>
 <?php echo $title; ?>
 <?php endif;?>
